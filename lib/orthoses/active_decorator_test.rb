@@ -13,5 +13,13 @@ module ActiveDecoratorTest
     unless actual == expected
       t.error("\nexpected:\n```\n#{expected}```\n\nactual:\n```\n#{actual}```")
     end
+
+    unless !store.key?("ClassDecorator")
+      t.error("ClassDecorator should not be generated")
+    end
+
+    unless !store.key?("DeprecatedDecorator")
+      t.error("DeprecatedDecorator should not be generated")
+    end
   end
 end
