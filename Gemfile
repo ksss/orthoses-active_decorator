@@ -8,4 +8,6 @@ gemspec
 gem "irb"
 gem "rake", "~> 13.0"
 
+gem "rails"
+gem "rgot"
 gem "rubocop", "~> 1.21"

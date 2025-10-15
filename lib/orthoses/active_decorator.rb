@@ -30,12 +30,14 @@ module Orthoses
     end
 
     def decorator_modules
+      app_decorators_path = ::Rails.root.join("app/decorators").to_s
       ObjectSpace.each_object(Module).select do |mod|
         name = Orthoses::Utils.module_name(mod) or next
         next unless name.end_with?(decorator_suffix)
 
         path, _line = Object.const_source_location(name)
-        next unless path&.start_with?(::Rails.root.join("app/decorators").to_s)
+        next unless path&.start_with?(app_decorators_path)
+        next if Class === mod
 
         mod
       end
