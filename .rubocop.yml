@@ -4,6 +4,7 @@ AllCops:
   Exclude:
     - 'lib/**/*_test.rb'
     - 'test/**/*.rb'
+    - 'vendor/**/*'
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
