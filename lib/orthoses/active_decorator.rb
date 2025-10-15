@@ -12,7 +12,7 @@ module Orthoses
       @loader.call.tap do |store|
         decorator_modules.each do |mod|
           decorator_name = mod.name
-          model_name = mod.name.sub("Decorator", "")
+          model_name = decorator_name.delete_suffix(decorator_suffix)
           begin
             model_name.constantize
           rescue NameError
@@ -25,10 +25,14 @@ module Orthoses
 
     private
 
+    def decorator_suffix
+      ::ActiveDecorator.config.decorator_suffix
+    end
+
     def decorator_modules
       ObjectSpace.each_object(Module).select do |mod|
         name = Orthoses::Utils.module_name(mod) or next
-        next unless name.end_with?("Decorator")
+        next unless name.end_with?(decorator_suffix)
 
         path, _line = Object.const_source_location(name)
         next unless path&.start_with?(::Rails.root.join("app/decorators").to_s)
